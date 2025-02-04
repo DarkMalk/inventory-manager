@@ -1,0 +1,8 @@
+# Files
+.venv
+main.spec
+
+# Folders
+__pycache__/
+dist/
+build/
