@@ -1,6 +1,7 @@
 # Files
 .venv
 main.spec
+.DS_Store
 
 # Folders
 __pycache__/
