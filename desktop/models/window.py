@@ -25,7 +25,7 @@ class Window:
         columns = list(self.data.keys())
         values = list(self.data.values())
 
-        self.treeview = Treeview(self.root, columns=columns, show="headings")
+        self.treeview = Treeview(self.root, columns=columns, show="headings", height=1)
 
         for index, key in enumerate(columns):
             self.treeview.heading(key, text=key, anchor="center")
