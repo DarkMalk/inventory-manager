@@ -18,7 +18,7 @@ const App = () => {
       <NavbarComponent />
       <main className='container my-5'>
         <Filters />
-        <TableComputers data={inventoryToRender} />
+        <TableComputers data={inventoryToRender} btnActions />
       </main>
       <ModalCamera />
       <Toaster richColors position='bottom-right' />
