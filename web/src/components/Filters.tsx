@@ -1,8 +1,9 @@
-import { DEFAULT_VALUES_FILTERS, useFilters } from '../hooks/useFilters'
 import { handleChangeInputs } from '../utils/handle_change_inputs'
 import { filterInventory } from '../utils/filtered_inventory'
+import { DEFAULT_VALUES_FILTERS } from '../utils/constants'
 import { Button, Input, InputGroup } from 'reactstrap'
 import { useInventory } from '../hooks/useInventory'
+import { useFilters } from '../hooks/useFilters'
 import { InputSelect } from './InputSelect'
 import { useEffect } from 'react'
 

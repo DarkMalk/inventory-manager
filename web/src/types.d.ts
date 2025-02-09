@@ -14,14 +14,20 @@ type Filters = {
   model: string
 }
 
-interface IStore {
+interface IStoreFilters {
+  filters: Filters
+  setFilters: (filters: Filters) => void
+}
+
+interface IStoreModal {
+  isOpenModal: boolean
+  toggleModal: () => void
+}
+
+interface IStoreInventory {
   inventory: IQRDataComputers[]
   add: (computer: IQRDataComputers) => void
   setInventory: (computers: IQRDataComputers[]) => void
-  isOpenModal: boolean
-  toggleModal: () => void
   filteredInventory: IQRDataComputers[]
   setFilteredInventory: (computers: IQRDataComputers[]) => void
-  filters: Filters
-  setFilters: (filters: Filters) => void
 }
