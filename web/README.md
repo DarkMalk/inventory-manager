@@ -1,50 +1,52 @@
-# React + TypeScript + Vite
+# Aplicación Web - QR Inventory
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Esta aplicación web está diseñada para optimizar y mejorar la eficiencia en la gestión de inventarios de equipos computacionales. Funciona como un complemento de la aplicación de escritorio disponible en el mismo repositorio.
 
-Currently, two official plugins are available:
+La aplicación permite recuperar datos escaneando el código QR generado por la aplicación de escritorio, agregando automáticamente la información a una tabla. Además, ofrece funcionalidades avanzadas de filtrado para facilitar la organización y búsqueda de datos específicos. Cuenta con una interfaz sencilla e intuitiva que facilita su uso para cualquier usuario.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Requisitos
 
-## Expanding the ESLint configuration
+- Node.JS: v22.11.0 (recomendado)
+- pnpm
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Iniciar servidor de desarrollo
 
-- Configure the top-level `parserOptions` property like this:
+Para empezar a desarrollar nos clonamos el repositorio utilizando el comando `gh` o `git`
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+```bash
+gh repo clone DarkMalk/inventory-manager
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+```bash
+git clone https://github.com/DarkMalk/inventory-manager.git
 ```
+
+Nos dirigimos a la carpeta de la aplicación web utilizando el comando `cd`
+
+```bash
+cd inventory-manager/web
+```
+
+Instalamos las dependencias del proyecto utilizando `pnpm` o `npm`
+
+```bash
+pnpm install
+```
+
+```bash
+npm install
+```
+
+Una vez instaladas las dependencias podemos utilizar el script `dev` para inicializar el servidor de desarrollo
+
+```bash
+pnpm run dev
+```
+
+```bash
+npm run dev
+```
+
+## Preview
+
+![Preview Web](/previews/preview-web.webp)
