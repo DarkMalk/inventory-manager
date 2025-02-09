@@ -11,7 +11,7 @@ import { toast } from 'sonner'
 const ModalCamera = () => {
   const [computer, setComputer] = useState<IQRDataComputers | null>(null)
   const { isOpenModal, toggleModal } = useModal()
-  const { inventory, addComputer } = useInventory()
+  const { inventory, addOneComputer } = useInventory()
   const isPausedCamera = !isOpenModal
 
   const closeModal = () => {
@@ -46,7 +46,7 @@ const ModalCamera = () => {
       return toast.error('The computer has already been added previously')
     }
 
-    addComputer(computer)
+    addOneComputer(computer)
     toast.success('Successfully added to inventory')
     closeModal()
   }
