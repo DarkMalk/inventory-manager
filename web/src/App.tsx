@@ -3,7 +3,7 @@ import { ModalCamera } from './components/ModalCamera'
 import { useInventory } from './hooks/useInventory'
 import { NavbarComponent } from './components/Nav'
 import { useFilters } from './hooks/useFilters'
-import { Filters } from './components/filters'
+import { Filters } from './components/Filters'
 import { Toaster } from 'sonner'
 
 const App = () => {
