@@ -1,21 +1,19 @@
-import { useEffect } from 'react'
-import { useStore } from '../store'
 import { getItemLocalStorage, saveItemLocalStorage } from '../utils/local_storage'
-
-const KEY_INVENTORY_LOCALSTORAGE = 'inventory_computers'
+import { KEY_INVENTORY_LOCALSTORAGE } from '../utils/constants'
+import { useStore } from '../store'
+import { useEffect } from 'react'
 
 export const useInventory = () => {
-  const { inventory, filteredInventory, add, setInventory, setFilteredInventory } = useStore()
-
-  function addComputer(computer: IQRDataComputers) {
-    saveItemLocalStorage(KEY_INVENTORY_LOCALSTORAGE, [...inventory, computer])
-    add(computer)
-  }
+  const { inventory, filteredInventory, add: addOneComputer, setInventory, setFilteredInventory } = useStore()
 
   useEffect(() => {
     const items = getItemLocalStorage<IQRDataComputers>(KEY_INVENTORY_LOCALSTORAGE)
-    if (items) setInventory(items)
-  }, [setInventory])
+    if (Array.isArray(items) && items.length > 0) setInventory(items)
+  }, [])
 
-  return { inventory, filteredInventory, addComputer, setFilteredInventory }
+  useEffect(() => {
+    saveItemLocalStorage(KEY_INVENTORY_LOCALSTORAGE, inventory)
+  }, [inventory])
+
+  return { inventory, filteredInventory, addOneComputer, setFilteredInventory, setInventory }
 }
