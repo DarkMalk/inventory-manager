@@ -25,7 +25,6 @@ export const ModalEditComputer = ({ isOpen, toggle, indexComputer }: Props) => {
   useEffect(() => {
     const computerToEdit = inventory[indexComputer]
     if (computerToEdit) setComputer({ ...computer, ...computerToEdit })
-    console.log({ computerToEdit, indexComputer })
   }, [indexComputer, inventory])
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
