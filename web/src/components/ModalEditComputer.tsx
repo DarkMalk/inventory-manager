@@ -1,6 +1,7 @@
 import { Button, Form, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap'
 import { handleChangeInputs } from '../utils/handle_change_inputs'
 import { useInventory } from '../hooks/useInventory'
+import { useFilters } from '../hooks/useFilters'
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 
@@ -20,19 +21,37 @@ const INITIAL_STATE_COMPUTER: IQRDataComputers = {
 
 export const ModalEditComputer = ({ isOpen, toggle, indexComputer }: Props) => {
   const [computer, setComputer] = useState<IQRDataComputers>(INITIAL_STATE_COMPUTER)
-  const { inventory, setInventory } = useInventory()
+  const { inventory, filteredInventory, setInventory, setFilteredInventory } = useInventory()
+  const { filters } = useFilters()
+
+  const hasFilters = Object.values(filters).some(value => value)
 
   useEffect(() => {
-    const computerToEdit = inventory[indexComputer]
+    const computerToEdit = hasFilters ? filteredInventory[indexComputer] : inventory[indexComputer]
     if (computerToEdit) setComputer({ ...computer, ...computerToEdit })
-  }, [indexComputer, inventory])
+  }, [indexComputer, inventory, filteredInventory])
 
+  // TODO: modificar para que esta funcionalidad se pueda utilizar mediante un ID en lugar de un index
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    const newInventory = inventory.map((item, index) => (index === indexComputer ? computer : item))
-    setInventory(newInventory)
-    toggle()
+    let newFilteredInventory = []
+    let newInventory = []
 
+    if (hasFilters) {
+      const indexComputerInventory = inventory.findIndex(item => item.hostname === computer.hostname)
+      if (indexComputerInventory !== -1) {
+        newInventory = inventory.map((item, index) => (index === indexComputerInventory ? computer : item))
+        setInventory(newInventory)
+      }
+
+      newFilteredInventory = filteredInventory.map((item, index) => (index === indexComputer ? computer : item))
+      setFilteredInventory(newFilteredInventory)
+    } else {
+      newInventory = inventory.map((item, index) => (index === indexComputer ? computer : item))
+      setInventory(newInventory)
+    }
+
+    toggle()
     toast.success('Computer edited successfully')
   }
 
