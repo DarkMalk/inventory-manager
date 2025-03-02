@@ -50,6 +50,7 @@ export const TableComputers = ({ columns = DEFAULT_COLUMNS, data, className, btn
               <td className='text-nowrap'>{value.serialnumber}</td>
               <td className='text-nowrap'>{value.manufacturer}</td>
               <td className='text-nowrap'>{value.model}</td>
+              <td className='text-nowrap'>{value.location}</td>
               {btnActions && (
                 <td className='text-nowrap d-flex gap-2'>
                   <Button color='warning' onClick={() => openModal(value.id)}>

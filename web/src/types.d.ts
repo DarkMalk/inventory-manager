@@ -6,7 +6,7 @@ interface IQRDataComputers {
   model: string
 }
 
-type ColumnsDataComputer = (keyof IQRDataComputers)[]
+type ColumnsDataComputer = (keyof IComputer)[]
 
 interface IComputer extends IQRDataComputers {
   id: string

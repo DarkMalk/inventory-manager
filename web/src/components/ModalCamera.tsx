@@ -1,6 +1,7 @@
 import { Alert, Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap'
 import { isPreviousAddedComputer } from '../utils/validate_is_previous_added'
 import { IDetectedBarcode, Scanner } from '@yudiel/react-qr-scanner'
+import { generateRandomUUID } from '../utils/generate_random_uuid'
 import { validateDataQR } from '../utils/validate_data_qr'
 import { useInventory } from '../hooks/useInventory'
 import { TableComputers } from './TableComputers'
@@ -9,7 +10,7 @@ import { useState } from 'react'
 import { toast } from 'sonner'
 
 const ModalCamera = () => {
-  const [computer, setComputer] = useState<IQRDataComputers | null>(null)
+  const [computer, setComputer] = useState<IComputer | null>(null)
   const { isOpenModal, toggleModal } = useModal()
   const { inventory, addOneComputer } = useInventory()
   const isPausedCamera = !isOpenModal
@@ -31,7 +32,12 @@ const ModalCamera = () => {
         return toast.error('Invalid QR data')
       }
 
-      setComputer(json)
+      const newComputer: IComputer = {
+        id: generateRandomUUID(),
+        ...json,
+        location: 'Unknown'
+      }
+      setComputer(newComputer)
     } catch {
       toast.error('Invalid QR data')
     }
@@ -48,17 +54,25 @@ const ModalCamera = () => {
 
     addOneComputer(computer)
     toast.success('Successfully added to inventory')
+    setComputer(null)
     closeModal()
   }
+
+  const alertText = computer
+    ? 'Device detected, do you want to save it to the inventory?'
+    : 'Bring your device closer to the QR to scan its information'
 
   return (
     <>
       <Modal fade centered isOpen={isOpenModal} toggle={closeModal}>
         <ModalHeader toggle={closeModal}>Scan Computer</ModalHeader>
         <ModalBody>
-          <Alert color='info'>Bring your device closer to the QR to scan its information</Alert>
-          <Scanner paused={isPausedCamera} styles={{ container: { aspectRatio: '1/1' } }} onScan={handleScan} />
-          {computer && <TableComputers className='my-4' data={[computer]} />}
+          <Alert color='info'>{alertText}</Alert>
+          {!computer ? (
+            <Scanner paused={isPausedCamera} styles={{ container: { aspectRatio: '1/1' } }} onScan={handleScan} />
+          ) : (
+            <TableComputers className='my-4' data={[computer]} />
+          )}
         </ModalBody>
         <ModalFooter>
           <Button disabled={!computer} color='primary' onClick={handleSaveComputers}>
