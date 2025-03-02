@@ -1,6 +1,6 @@
 type Props = {
   filters: Filters
-  inventory: IQRDataComputers[]
+  inventory: IComputer[]
 }
 
 export const filterInventory = ({ filters, inventory }: Props) => {
