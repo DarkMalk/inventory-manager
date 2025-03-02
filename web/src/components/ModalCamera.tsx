@@ -1,4 +1,4 @@
-import { Alert, Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap'
+import { Alert, Button, Input, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap'
 import { isPreviousAddedComputer } from '../utils/validate_is_previous_added'
 import { IDetectedBarcode, Scanner } from '@yudiel/react-qr-scanner'
 import { generateRandomUUID } from '../utils/generate_random_uuid'
@@ -8,6 +8,7 @@ import { TableComputers } from './TableComputers'
 import { useModal } from '../hooks/useModal'
 import { useState } from 'react'
 import { toast } from 'sonner'
+import { handleChangeInputs } from '../utils/handle_change_inputs'
 
 const ModalCamera = () => {
   const [computer, setComputer] = useState<IComputer | null>(null)
@@ -35,6 +36,7 @@ const ModalCamera = () => {
       const newComputer: IComputer = {
         id: generateRandomUUID(),
         ...json,
+        serialnumber: json.serialnumber || 'Unknown',
         location: 'Unknown'
       }
       setComputer(newComputer)
@@ -52,7 +54,7 @@ const ModalCamera = () => {
       return toast.error('The computer has already been added previously')
     }
 
-    addOneComputer(computer)
+    addOneComputer({ ...computer, location: computer.location || 'Unknown' })
     toast.success('Successfully added to inventory')
     setComputer(null)
     closeModal()
@@ -61,6 +63,8 @@ const ModalCamera = () => {
   const alertText = computer
     ? 'Device detected, do you want to save it to the inventory?'
     : 'Bring your device closer to the QR to scan its information'
+
+  console.log(computer)
 
   return (
     <>
@@ -71,7 +75,16 @@ const ModalCamera = () => {
           {!computer ? (
             <Scanner paused={isPausedCamera} styles={{ container: { aspectRatio: '1/1' } }} onScan={handleScan} />
           ) : (
-            <TableComputers className='my-4' data={[computer]} />
+            <>
+              <TableComputers className='my-4' data={[computer]} />
+              <Input
+                type='text'
+                placeholder='Insert location for this device, default is Unknown'
+                className='mt-2'
+                name='location'
+                onChange={event => handleChangeInputs({ event, data: computer, setState: setComputer })}
+              />
+            </>
           )}
         </ModalBody>
         <ModalFooter>
