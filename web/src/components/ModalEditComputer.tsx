@@ -8,48 +8,36 @@ import { toast } from 'sonner'
 type Props = {
   isOpen: boolean
   toggle: () => void
-  indexComputer: number
+  idComputer: string
 }
 
-const INITIAL_STATE_COMPUTER: IQRDataComputers = {
+const INITIAL_STATE_COMPUTER: IComputer = {
+  id: '',
   hostname: '',
   ip: '',
   serialnumber: '',
   manufacturer: '',
-  model: ''
+  model: '',
+  location: ''
 }
 
-export const ModalEditComputer = ({ isOpen, toggle, indexComputer }: Props) => {
-  const [computer, setComputer] = useState<IQRDataComputers>(INITIAL_STATE_COMPUTER)
-  const { inventory, filteredInventory, setInventory, setFilteredInventory } = useInventory()
+export const ModalEditComputer = ({ isOpen, toggle, idComputer }: Props) => {
+  const [computer, setComputer] = useState<IComputer>(INITIAL_STATE_COMPUTER)
+  const { inventory, filteredInventory, updateComputer } = useInventory()
   const { filters } = useFilters()
 
   const hasFilters = Object.values(filters).some(value => value)
 
   useEffect(() => {
-    const computerToEdit = hasFilters ? filteredInventory[indexComputer] : inventory[indexComputer]
-    if (computerToEdit) setComputer({ ...computer, ...computerToEdit })
-  }, [indexComputer, inventory, filteredInventory])
+    const computerToEdit = hasFilters
+      ? filteredInventory.find(item => item.id === idComputer)
+      : inventory.find(item => item.id === idComputer)
+    if (computerToEdit) setComputer(computerToEdit)
+  }, [idComputer, inventory, filteredInventory])
 
-  // TODO: modificar para que esta funcionalidad se pueda utilizar mediante un ID en lugar de un index
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    let newFilteredInventory = []
-    let newInventory = []
-
-    if (hasFilters) {
-      const indexComputerInventory = inventory.findIndex(item => item.hostname === computer.hostname)
-      if (indexComputerInventory !== -1) {
-        newInventory = inventory.map((item, index) => (index === indexComputerInventory ? computer : item))
-        setInventory(newInventory)
-      }
-
-      newFilteredInventory = filteredInventory.map((item, index) => (index === indexComputer ? computer : item))
-      setFilteredInventory(newFilteredInventory)
-    } else {
-      newInventory = inventory.map((item, index) => (index === indexComputer ? computer : item))
-      setInventory(newInventory)
-    }
+    updateComputer(computer)
 
     toggle()
     toast.success('Computer edited successfully')
@@ -64,7 +52,7 @@ export const ModalEditComputer = ({ isOpen, toggle, indexComputer }: Props) => {
             Hostname
             <Input
               type='text'
-              onChange={event => handleChangeInputs<IQRDataComputers>({ event, data: computer, setState: setComputer })}
+              onChange={event => handleChangeInputs<IComputer>({ event, data: computer, setState: setComputer })}
               name='hostname'
               value={computer.hostname}
               placeholder='Hostname'
@@ -75,7 +63,7 @@ export const ModalEditComputer = ({ isOpen, toggle, indexComputer }: Props) => {
             IP
             <Input
               type='text'
-              onChange={event => handleChangeInputs<IQRDataComputers>({ event, data: computer, setState: setComputer })}
+              onChange={event => handleChangeInputs<IComputer>({ event, data: computer, setState: setComputer })}
               name='ip'
               value={computer.ip}
               placeholder='IP'
@@ -86,7 +74,7 @@ export const ModalEditComputer = ({ isOpen, toggle, indexComputer }: Props) => {
             Serial Number
             <Input
               type='text'
-              onChange={event => handleChangeInputs<IQRDataComputers>({ event, data: computer, setState: setComputer })}
+              onChange={event => handleChangeInputs<IComputer>({ event, data: computer, setState: setComputer })}
               name='serialnumber'
               value={computer.serialnumber}
               placeholder='Serial Number'
@@ -97,7 +85,7 @@ export const ModalEditComputer = ({ isOpen, toggle, indexComputer }: Props) => {
             Manufacturer
             <Input
               type='text'
-              onChange={event => handleChangeInputs<IQRDataComputers>({ event, data: computer, setState: setComputer })}
+              onChange={event => handleChangeInputs<IComputer>({ event, data: computer, setState: setComputer })}
               name='manufacturer'
               value={computer.manufacturer}
               placeholder='Manufacturer'
@@ -108,10 +96,21 @@ export const ModalEditComputer = ({ isOpen, toggle, indexComputer }: Props) => {
             Model
             <Input
               type='text'
-              onChange={event => handleChangeInputs<IQRDataComputers>({ event, data: computer, setState: setComputer })}
+              onChange={event => handleChangeInputs<IComputer>({ event, data: computer, setState: setComputer })}
               name='model'
               value={computer.model}
               placeholder='Model'
+              required
+            />
+          </Label>
+          <Label>
+            Location
+            <Input
+              type='text'
+              onChange={event => handleChangeInputs<IComputer>({ event, data: computer, setState: setComputer })}
+              name='location'
+              value={computer.location}
+              placeholder='Location'
               required
             />
           </Label>

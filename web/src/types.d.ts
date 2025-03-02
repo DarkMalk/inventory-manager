@@ -8,6 +8,11 @@ interface IQRDataComputers {
 
 type ColumnsDataComputer = (keyof IQRDataComputers)[]
 
+interface IComputer extends IQRDataComputers {
+  id: string
+  location: string
+}
+
 type Filters = {
   searchString: string
   manufacturer: string
@@ -25,9 +30,9 @@ interface IStoreModal {
 }
 
 interface IStoreInventory {
-  inventory: IQRDataComputers[]
-  add: (computer: IQRDataComputers) => void
-  setInventory: (computers: IQRDataComputers[]) => void
-  filteredInventory: IQRDataComputers[]
-  setFilteredInventory: (computers: IQRDataComputers[]) => void
+  inventory: IComputer[]
+  add: (computer: IComputer) => void
+  setInventory: (computers: IComputer[]) => void
+  filteredInventory: IComputer[]
+  setFilteredInventory: (computers: IComputer[]) => void
 }

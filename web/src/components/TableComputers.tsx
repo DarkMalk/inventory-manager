@@ -9,23 +9,23 @@ import { toast } from 'sonner'
 
 type Props = {
   columns?: ColumnsDataComputer
-  data: IQRDataComputers[]
+  data: IComputer[]
   className?: string
   btnActions?: boolean
 }
 
 export const TableComputers = ({ columns = DEFAULT_COLUMNS, data, className, btnActions }: Props) => {
-  const [indexComputer, setIndexComputer] = useState<number | null>(null)
+  const [idComputer, setIdComputer] = useState<string | null>(null)
   const [isOpenModal, setIsOpenModal] = useState(false)
   const { inventory, setInventory } = useInventory()
 
-  const handleDelete = (index: number) => {
-    setInventory(inventory.filter((_, i) => i !== index))
+  const handleDelete = (id: string) => {
+    setInventory(inventory.filter(item => item.id !== id))
     toast.success('Computer deleted successfully')
   }
 
-  const openModal = (index: number) => {
-    setIndexComputer(index)
+  const openModal = (id: string) => {
+    setIdComputer(id)
     setIsOpenModal(!isOpenModal)
   }
 
@@ -43,7 +43,7 @@ export const TableComputers = ({ columns = DEFAULT_COLUMNS, data, className, btn
         </thead>
         <tbody>
           {data.map((value, index) => (
-            <tr key={index}>
+            <tr key={value.id}>
               <th scope='row'>{index + 1}</th>
               <td className='text-nowrap'>{value.hostname}</td>
               <td className='text-nowrap'>{value.ip}</td>
@@ -52,10 +52,10 @@ export const TableComputers = ({ columns = DEFAULT_COLUMNS, data, className, btn
               <td className='text-nowrap'>{value.model}</td>
               {btnActions && (
                 <td className='text-nowrap d-flex gap-2'>
-                  <Button color='warning' onClick={() => openModal(index)}>
+                  <Button color='warning' onClick={() => openModal(value.id)}>
                     <EditIcon />
                   </Button>
-                  <Button color='danger' onClick={() => handleDelete(index)}>
+                  <Button color='danger' onClick={() => handleDelete(value.id)}>
                     <TrashIcon />
                   </Button>
                 </td>
@@ -67,7 +67,7 @@ export const TableComputers = ({ columns = DEFAULT_COLUMNS, data, className, btn
       <ModalEditComputer
         isOpen={isOpenModal}
         toggle={() => setIsOpenModal(!isOpenModal)}
-        indexComputer={indexComputer ?? 0}
+        idComputer={idComputer ?? ''}
       />
     </>
   )
