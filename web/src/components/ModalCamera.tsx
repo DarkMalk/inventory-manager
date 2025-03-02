@@ -64,8 +64,6 @@ const ModalCamera = () => {
     ? 'Device detected, do you want to save it to the inventory?'
     : 'Bring your device closer to the QR to scan its information'
 
-  console.log(computer)
-
   return (
     <>
       <Modal fade centered isOpen={isOpenModal} toggle={closeModal}>
