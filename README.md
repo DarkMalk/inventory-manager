@@ -1,5 +1,9 @@
 # Inventory QR Desktop And Web
 
+## previews
+
+![inventory-manager-web-preview](./preview/inventory-manager.webp)
+
 ## Descripción del Proyecto
 
 Este proyecto surge como una solución para optimizar y mejorar la eficiencia del proceso de inventario en un centro médico. Actualmente, el registro y gestión de los equipos informáticos se realiza de manera manual, lo que puede ser propenso a errores y consumir mucho tiempo. Para resolver este problema, se ha desarrollado una aplicación de escritorio compatible con Windows y macOS, que genera un código QR con los datos relevantes de cada equipo, incluyendo hostname, dirección IP, número de serie, marca y modelo.

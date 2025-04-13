@@ -49,4 +49,4 @@ npm run dev
 
 ## Preview
 
-![Preview Web](/previews/preview-web.webp)
+![Preview Web](/preview/inventory-manager.webp)
