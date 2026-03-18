@@ -2,6 +2,8 @@
 
 ## previews
 
+![invetory-manager-desktop-preview](./preview/preview-desktop-app-qr.webp)
+
 ![inventory-manager-web-preview](./preview/inventory-manager.webp)
 
 ## Descripción del Proyecto
@@ -17,7 +19,6 @@ Este sistema no solo agiliza el proceso de inventario, sino que también reduce 
 El proyecto está desarrollado con un enfoque en eficiencia y facilidad de uso, utilizando las siguientes tecnologías:
 
 - Aplicación de Escritorio:
-
   - Lenguaje: Python 3.13
   - Interfaz Gráfica: Tkinter
 
