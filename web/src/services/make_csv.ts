@@ -11,7 +11,7 @@ export const makeCSV = ({ data }: Props) => {
   csvLines.push(headersCSV)
 
   for (const content of data) {
-    const values: string[] = Object.values(content)
+    const [, ...values]: string[] = Object.values(content)
     csvLines.push(values.map(value => value.replace(',', '.')).join(','))
   }
 
